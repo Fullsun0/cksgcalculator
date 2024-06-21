@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品總金額計算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+            background-color: lavender;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>代購商品總金額計算</h1>
+    <label for="amountSGD">輸入購買商品總額（新幣）:</label>
+    <input type="number" id="amountSGD" placeholder="新幣" step="0.01">
+    <br>
+    <button onclick="calculateTotal()">計算總代購金額（新台幣）</button>
+    <h2 id="totalAmountTWD">總代購金額：-</h2>
+
+    <script>
+        function calculateTotal() {
+            const exchangeRate = 24.1;
+            const commissionRate = 0.10;
+            const creditCardFee = 0.015;
+
+            const amountSGD = parseFloat(document.getElementById('amountSGD').value);
+            if (isNaN(amountSGD)) {
+                alert('請輸入有效的金額');
+                return;
+            }
+
+            const amountTWD = amountSGD * exchangeRate;
+            const commission = amountTWD * commissionRate;
+            const cardFee = amountTWD * creditCardFee;
+            const totalAmount = Math.round(amountTWD + commission + cardFee);
+
+            document.getElementById('totalAmountTWD').innerText = `總代購金額：${totalAmount} 新台幣`;
+        }
+    </script>
+</body>
+</html>
